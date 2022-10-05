@@ -1,0 +1,1712 @@
+// ②CSS準備
+// cssの方にも文字コードを指定する必要がある？とりあえず書いといた方がいいと記事参照
+@charset "utf-8";
+
+
+// フォントーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// GoogleフォントCSSにインポートする時は@importをコピペ↓
+// @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap');
+
+
+//google fonts  →→ https://fonts.google.com/
+
+// font-family変数ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// $fontLogo: 'Lato',
+// sans-serif;
+$fontEn: 'Lora',
+serif,
+sans-serif;
+$fontJp: 'Noto Serif JP',
+serif,
+sans-serif;
+
+$fontGothic:"游ゴシック体",
+"YuGothic",
+"游ゴシック Medium",
+"Yu Gothic Medium",
+"游ゴシック",
+"Yu Gothic",
+serif,
+sans-serif;
+
+// bg-color変数   ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+$color-bg-green:#31452d;
+$color-bg-yellow:#eeead0;
+$color-bg-yellow-hard:#b69b04;
+$color-bg-black:#333333;
+
+// font-color変数   ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+$color-font-black:#333333;
+$color-font-gleen:#31452d;
+$color-font-yellow:#b69b04;
+
+$color-border-yellow:#b69b04;
+
+
+// inner変数   ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+$layout_width_display: 1440px;
+$layout_width_inner: 1040px;
+// $lauout_width_inner_s: 960px;
+
+
+
+// レスポンシブメディアクエリ設定ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+// 変数指定 inner初期値のレイアウト幅設定
+// 変数無し
+
+// ブレークポイントスマホ幅設定
+// マップ型変数breakpointsを定義
+// minは
+// maxは
+$breakpoints: ("pc": "screen and (min-width:1040px)",
+    "tab": "screen and (min-width:768px) and (max-width: #{$layout_width_inner - 1})",
+    "sp": "screen and (max-width:767px)",
+    "s": "screen and (max-width:500px)",
+    "xs": "screen and (max-width:400px)",
+
+);
+
+// メディアクエリー @includeは → mq(sp)でスマホ
+//出力コピぺ→     @include mq(sp){}
+
+// メディアクエリ用のmixinを定義。デフォ値はpc
+@mixin mq($breakpoint:sp) {
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}
+
+
+// 全体共通ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//(tips).is-pc  .is-sp というクラスを付けて
+// 各クラスがついてる時には表示させないようにしておく
+// spの時にはpcは表示させないとしておく
+@include mq (pc) {
+    .is-sp {
+        display: none;
+    }
+}
+
+@include mq (pc) {
+    .is-tab {
+        display: none;
+    }
+}
+
+@include mq (sp) {
+    .is-pc {
+        display: none;
+    }
+}
+
+*,
+*::before,
+*::after {
+    // 幅を指定した時padding、border含めて計算してくれる
+    box-sizing: border-box;
+}
+
+// デフォルト
+body {
+    font-size: 16px;
+    color: $color-font-black;
+    font-family: $fontJp;
+    background-color: #fff;
+    font-weight: 400;
+
+}
+
+.inner {
+    max-width: $layout_width_inner;
+    margin: auto;
+}
+
+img {
+    width: 100%;
+}
+
+
+.section {
+    padding: 120px 20px;
+
+    // @include mq (m) {
+    //     padding: 60px 0;
+    // }
+}
+
+.header,
+.top,
+.section {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+.section__title {
+    // margin: 100px 0 106px;
+}
+
+
+
+// 飛び出していて謎の余白が発生した時使用
+// * {
+//     outline: 2px solid red;
+// }
+
+// その他共通 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+a {
+    text-decoration: none;
+    color: $color-font-black;
+}
+
+
+
+.section__title_jp {
+    font-size: 32px;
+    text-align: center;
+    font-weight: 500;
+    font-family: $fontJp;
+    color: $color-font-black;
+
+    @include mq (sp) {
+        font-size: 24px;
+    }
+}
+
+.section__title_en {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: 400;
+    font-family: $fontEn;
+    color: $color-font-gleen;
+
+    position: relative;
+    width: 65px;
+    margin: 5px auto 0;
+
+    @include mq (sp) {
+        font-size: 14px;
+    }
+
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+        background: $color-border-yellow;
+        width: 100%;
+        height: 1px;
+
+    }
+}
+
+.btn_a {
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    margin: 13px auto 0;
+    border: $color-bg-green 1px solid;
+}
+
+.btn_b {
+    text-align: center;
+    width: 160px;
+    height: 48px;
+    line-height: 48px;
+    background-color: $color-bg-green;
+
+    @include mq (sp) {
+        width: 150px;
+    }
+}
+
+.btn_link {
+    display: block;
+}
+
+// .while_btn {
+//     background-color: $color-btn-bg-purple;
+//     height: 70px;
+//     width: 400px;
+//     border-radius: 50px;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.24);
+// }
+
+// .purple_link {
+//     color: #fff;
+//     font-weight: 700;
+//     font-size: 18px;
+//     display: inline-block;
+//     width: 100%;
+//     // height: 100%;
+// }
+
+// .white_link {
+//     color: $color-font-purple-dark;
+//     font-weight: 700;
+//     font-size: 18px;
+//     display: inline-block;
+//     width: 100%;
+//     // height: 100%;
+// }
+
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// ドロワー
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+.burger_image {
+    // width: 19px;
+    // height: 6px;
+    // position: absolute;
+    // top: -5px;
+    // right: 22px;
+    // display: none;
+
+    // @include mq (s) {
+    //     display: block;
+    // }
+}
+
+// ②ドロワーの色変更
+.drawer-hamburger-icon {
+    @include mq (sp) {
+        background-color: #4f5152;
+
+        &::before,
+        &::after {
+            background-color: #4f5152;
+
+        }
+    }
+}
+
+// ; ③開閉した時ヘッダー全体に被ってしまうのでずらしてあげる
+// .drawer-navというクラスにデフォルトでfixedが当たっているのでtopが適用できる。mtでも同じことができるのでどっちでもいいのかな？
+.drawer-nav {
+    @include mq (sp) {
+        padding: 24px 0;
+        width: 50%;
+        justify-content: center;
+
+    }
+}
+
+
+.drawer--right.drawer-open .drawer-hamburger {
+    right: 3px;
+}
+
+// ④アイコンの調整
+// アイコンがヘッダーロゴに被ってるのでアイコンを動かさないようにする
+// .drawer--rightというクラスは必須でヘッダーの中のdrawer-hamburgerに指定をすると下のようになる
+.drawer--right .header .drawer-hamburger {
+    // @include mq (s) {
+    //     right: 3px;
+    // }
+}
+
+// ⑤横並びになってるドロワーリストを縦並びにする
+// 横になってるドロワーリストがどこにどのように効いてるかを検証ツールで確認する。
+// mlもついたままになってるのでsp時は解除してあげる（どこに効いてるかは検証ツール）
+// →ただヘッダーナビリストにflexと.header__nav_itemにml効かせたのでそこのmediaqueryをpcのみにするでも同じだった
+// デフォルトのドロワーのクラスに指定した方が判りやすいかな
+.drawer-menu {
+    @include mq (sp) {
+        flex-direction: column;
+            padding-top: 150px;
+    }
+}
+
+// ⑥文字の装飾は.header__nav_item_link
+
+
+// ⑦横から開閉の幅
+.drawer--right .drawer-nav {
+    right: -30rem;
+}
+
+// ⑧ハンバーガーの長さや太さ
+.drawer-hamburger-icon,
+.drawer-hamburger-icon:after,
+.drawer-hamburger-icon:before {
+    height: 3px;
+    border-radius: 100px;
+    // right: -15px;
+}
+
+.drawer-hamburger-icon:after,
+.drawer-hamburger-icon:before {
+    width: 20px;
+    // left: -10px;
+}
+
+.drawer-hamburger-icon {
+    width: 20px;
+}
+
+// ドロワー背景消去
+.drawer-open .drawer-overlay {
+    display: none;
+}
+
+
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// header
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+.header {
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    z-index: 20;
+    background: rgba(#fff, .8);
+    // background: #fff;
+    // opacity: .8;
+
+    @include mq (sp) {
+        height: 64px;
+    }
+}
+
+.header__inner {
+    display: flex;
+    margin: auto;
+
+    @include mq (tab) {
+        justify-content: space-between;
+        margin: 0;
+    }
+
+    @include mq (sp) {
+        height: 64px;
+    }
+}
+
+.header__title_logo {
+    width: 140px;
+    height: 80px;
+    margin-right: auto;
+    margin-right: 31px;
+
+    @include mq (tab) {
+        margin-right: auto;
+    }
+
+    @include mq (sp) {
+        height: 64px;
+        width: 115px;
+    }
+
+    a {
+        height: 100%;
+        display: block;
+        align-items: center;
+
+        img {
+            height: 100%;
+        }
+    }
+}
+
+.header__nav_list {
+    margin-left: auto;
+
+    @include mq (tab) {
+        margin: 0;
+    }
+}
+
+.header__nav_items {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+
+}
+
+.header__nav_item {
+    height: 80px;
+}
+
+.header__nav_item_link {
+    padding: 24px 32px 24px 31px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: block;
+    position: relative;
+    padding-left: clamp(10px, 2.5vw, 31px);
+    padding-right: clamp(10px, 2.5vw, 32px);
+    transition: .3s;
+
+    &:hover {
+        background: #31452d;
+        color: #fff;
+    }
+
+    &::before {
+        position: absolute;
+        content: '';
+        height: 36px;
+        width: 1px;
+        background-color: #333;
+        top: 22.4px;
+        left: 0;
+
+        @include mq (sp) {
+            display: none;
+        }
+    }
+
+    span {
+        width: 100%;
+        font-size: 12px;
+        font-family: $fontEn;
+        color: $color-font-yellow;
+        display: block;
+        align-items: center;
+        margin-top: 6px;
+        padding-right: 3px;
+
+    }
+}
+
+.header__nav_contact {
+
+    width: 168px;
+    height: 80px;
+    text-align: center;
+    background-color: $color-bg-green;
+    margin-left: 5px;
+
+    @include mq (tab) {
+        display: none;
+    }
+
+    @include mq (sp) {
+        display: none;
+    }
+
+}
+
+.header__nav_contact_link {
+    color: #fff;
+    padding: 23px 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: .3s;
+
+    &:hover {
+        opacity: .4;
+    }
+
+    span {
+        font-size: 12px;
+        font-family: $fontEn;
+        color: $color-font-yellow;
+        display: block;
+        align-items: center;
+        margin-top: 7px;
+    }
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// top
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+.top {
+    width: 100%;
+    height: 900px;
+    // ↓何故ここにtransparentが必要か解らない
+    background: transparent url(../pc-assets/2x/jp-home.jpg) no-repeat center center / cover;
+
+    @include mq (sp) {
+        background: transparent url(../pc-assets/2x/jp-home.jpg) no-repeat right 65% center / cover;
+        // background: transparent url(../pc-assets/2x/top-image@2x.jpg) no-repeat bottom left 52% / cover;
+        height: 812px;
+    }
+}
+
+.top__inner {
+    // inheritは親要素の継承となる
+    height: inherit;
+    position: relative;
+    margin: auto;
+}
+
+.top__inner_text {
+    position: absolute;
+    top: 54.3%;
+    transform: translateY(-50%);
+    left: -36px;
+
+    @include mq (sp) {
+        width: clamp(300px, 80vw, 500px);
+        height: 140px;
+        left: -17px;
+        top: 60%;
+    }
+
+
+    img {
+        // テキストは画像なのでmax-widthを指定してあげとく
+        max-width: 960px;
+
+        // 要理解↓pcの時タブレットも入れてあげないとタブレット対応の時両方出てしまう
+        &.is-sp {
+            @include mq (tab) {
+                display: none;
+            }
+        }
+    }
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// concept
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+.concept {
+    max-width: 1440px;
+    margin: auto;
+    
+    padding: clamp(30px,10vw,70px) 0 0 0;
+    @include mq (sp) {
+        padding: clamp(30px,9vw,78px) 0 0 0;
+
+    }
+
+}
+
+.concept__inner {
+    position: relative;
+
+}
+
+.concept__title_jp {}
+
+.concept__title_en {
+    position: relative;
+    width: 65px;
+    margin: 5px auto 0;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+        background: $color-border-yellow;
+        width: 100%;
+        height: 1px;
+
+    }
+}
+
+.concept__bg {
+    margin-top: 50px;
+    max-width: 1120px;
+    height: 480px;
+    margin-left: auto;
+    background: url(../pc-assets/2x/image-concept@2x.jpg) no-repeat center center / cover;
+
+    @include mq (sp) {
+        margin-top: 43px;
+        background: url(../pc-assets/2x/image-concept@2x.jpg) no-repeat center center / cover;
+        height: 360px;
+    }
+}
+
+.concept__box {
+    position: absolute;
+    top: 77.2%;
+    left: 0;
+    transform: translateY(-50%);
+    max-width: clamp(300px,50vw,640px);
+    height: 327px;
+    padding: 64px clamp(20px,2vw,46px) 64px;
+    background-color: $color-bg-green;
+    color: #fff;
+
+    @include mq (sp) {
+        position: static;
+        transform: translateY(0);
+        max-width: 100%;
+        padding: clamp(50px,10vw,70px) clamp(20px,3vw,40px) 0px;
+        height: 300px;
+    }
+
+    @include mq (xs) {
+        padding: 40px 20px;
+        height: 320px;
+    }
+}
+
+.concept__box_title {
+    font-size: 24px;
+
+    @include mq (sp) {
+        font-size: 20px;
+    }
+}
+
+.concept__box_text {
+    margin-top: 18px;
+    line-height: 2.5;
+    letter-spacing: .067em;
+
+    @include mq (sp) {
+        margin-top: 15px;
+        line-height: 2;
+        letter-spacing: .11em;
+        font-size: 16px;
+
+    }
+}
+
+.concept__box_text_detail {
+    text-align: right;
+    margin-right: 23px;
+    margin-top: 21px;
+    position: relative;
+    color: #fff;
+    display: block;
+    transition: .3s;
+
+    &:hover {
+        opacity: .4;
+    }
+
+    @include mq (sp) {
+        margin-top: 25px;
+
+    }
+
+    &::after {
+        position: absolute;
+        top: 49%;
+        transform: translateY(-50%);
+        right: -21px;
+        width: 16px;
+        height: 16px;
+        content: '';
+        background: url(../pc-assets/normal/arrow-w-icon.png) no-repeat center center / contain;
+    }
+
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// works
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+.works {
+    padding: 148px 20px 0 20px;
+    position: relative;
+
+    padding: clamp(30px,10vw,90px) 0 0 0;
+    @include mq (sp) {
+        padding: clamp(30px,9vw,78px) 0 0 0;
+
+    }
+}
+
+.works__inner {}
+
+.works__title_jp {}
+
+.works__title_en {
+    margin: 6px auto 0;
+
+    &::after {
+        bottom: -17px;
+    }
+}
+
+.works__items {
+    margin-top: 49px;
+    display: grid;
+    grid-template-columns: repeat(3, 30.78%);
+    grid-template-rows: repeat(2, 391px);
+    // height: 100%;
+    // max-height: 391px;
+    // min-height: 170px;
+
+    align-items: start;
+    justify-items: center;
+
+    grid-column-gap: 40px;
+    grid-column-gap: clamp(20px, 4%, 40px);
+    // grid-row-gap: 66px;
+    // grid-row-gap: clamp(20px, 10%, 66px);
+
+    @include mq (sp) {
+        margin-top: 20px;
+        grid-template-columns: repeat(2, 47.78%);
+        grid-template-rows: repeat(3, 270px);
+        // margin: 49px auto 0;
+
+        grid-column-gap: clamp(17px, 4%, 40px);
+        justify-content: center;
+        justify-items: center;
+        align-items: center;
+    }
+    @include mq (s) {
+        grid-template-rows: repeat(3, 200px);
+    }
+}
+
+.works__item {
+    width: 100%;
+    @include mq (sp) {
+        
+    }
+}
+
+.works__item_pic {
+    width: 100%;
+    max-width: 320px;
+    min-width: 140px;
+    // height: 240px;
+    height: 100%;
+    max-height: 240px;
+    min-height: 104px;
+    
+    @include mq (sp) {
+        max-width: 160px;
+        max-width: clamp(140px,32.5vw,320px);
+        // max-height: 104px;
+        margin: auto;
+
+        img {
+            // height: 104px;
+        }
+    }
+
+    @include mq (xs) {
+        max-width: 120px;
+        max-height: 90px;
+        margin: auto;
+
+        img {
+            width: 80%;
+            height: 100px;
+        }
+    }
+}
+
+.works__item_text_wrap {
+    padding: 22px 32px 24px 33px;
+
+    @include mq (sp) {
+        text-align: left;
+        padding: 0px 0 0px 17px;
+        margin-top: 17px;
+
+    }
+}
+
+.works__item_title {
+    font-size: 24px;
+
+    @include mq (sp) {
+        font-size: 20px;
+    }
+}
+
+.works__item_detail {
+    margin-top: 24px;
+    position: relative;
+
+    @include mq (sp) {
+        margin-top: 15px;
+    }
+
+    &::before {
+        position: absolute;
+        bottom: -3px;
+        left: -10px;
+        width: 1px;
+        height: 145px;
+        content: '';
+        background: #333;
+
+        @include mq (sp) {
+
+            height: 97px;
+            left: -9px;
+            bottom: 0px;
+        }
+        @include mq (s) {
+            left: -18px;
+        
+        }
+    }
+
+
+    &::after {
+        position: absolute;
+        top: 49%;
+        transform: translateY(-50%);
+        left: 85px;
+        width: 16px;
+        height: 16px;
+        content: '';
+        background: url(../pc-assets/normal/arrow-b-icon.png) no-repeat center center / contain;
+    }
+
+}
+
+.works__bg {
+    position: absolute;
+    top: 33.5%;
+    right: 0px;
+    content: '';
+    background: $color-bg-yellow;
+    // width: 100%;
+    // max-width: 986px;
+    // min-width: 400px;
+    width: clamp(400px, 69vw, 986px);
+    height: 638px;
+    // max-height:638px ;
+    z-index: -2;
+
+    @include mq (sp) {
+
+        top: 34.5%;
+        width: clamp(280px, 69vw, 400px);
+        height: 510px;
+    }
+}
+
+.works__btn {
+    text-align: center;
+    width: 200px;
+    height: 50px;
+
+    @include mq (sp) {
+        width: 152px;
+        height: 49px;
+        margin-top: 80px;
+    }
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+//news
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+.news {
+    padding: 116px 20px 120px 20px;
+
+    @include mq (sp) {
+        padding: 77px 20px 80px 20px;
+
+    }
+}
+
+.news__inner {}
+
+.news__title_jp {}
+
+.news__title_en {
+    &::after {
+
+        bottom: -17px;
+    }
+}
+
+.news__table_wrap {
+    max-width: 1040px;
+    margin-top: 48px;
+    height: auto;
+
+    @include mq (sp) {
+        margin-top: 17px;
+
+    }
+}
+
+.news__table_item {
+    height: 56px;
+    line-height: 56px;
+    display: flex;
+    width: 100%;
+    position: relative;
+
+
+    @include mq (sp) {
+        display: inline-flex;
+        // height: 16px;
+        line-height: 16px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        padding-bottom: 15px;
+
+        &::before {
+            position: absolute;
+            bottom: 0px;
+            left: -2px;
+            width: 100%;
+            height: 1px;
+            content: '';
+            background: #e5e5e5;
+        }
+
+        &:not(:first-of-type) {
+            margin-top: 37px;
+        }
+
+        &:nth-of-type(3) {
+
+            // position:static;
+            &::before {
+                position: absolute;
+                bottom: -30px;
+                left: -2px;
+                width: 100%;
+                height: 1px;
+                content: '';
+                background: #e5e5e5;
+
+                @include mq (xs) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @include mq (xs) {
+        &:nth-of-type(2) {
+            margin-top: 25px;
+
+            // position:static;
+            &::before {
+                position: absolute;
+                bottom: -30px;
+                left: -2px;
+                width: 100%;
+                height: 1px;
+                content: '';
+                background: #e5e5e5;
+            }
+        }
+
+
+
+    }
+
+}
+
+.news__table_time {
+    width: 158px;
+    font-family: $fontEn;
+    position: relative;
+    text-align: center;
+
+    @include mq (sp) {
+        font-size: 14px;
+        text-align: left;
+        width: 72px;
+    }
+
+    &::before {
+        position: absolute;
+        bottom: 0px;
+        left: -2px;
+        width: 1px;
+        height: 55px;
+        content: '';
+        background: #e5e5e5;
+
+        @include mq (sp) {
+            position: static;
+        }
+    }
+}
+
+.news__table_title {
+    width: 142px;
+    font-family: $fontEn;
+    padding-right: 5px;
+    position: relative;
+    text-align: center;
+
+    @include mq (sp) {
+        text-align: left;
+        width: 46px;
+        padding-right: 0;
+        padding-left: 16px;
+    }
+
+    &::before {
+        position: absolute;
+        bottom: 0px;
+        left: -4px;
+        width: 1px;
+        height: 55px;
+        content: '';
+        background: #e5e5e5;
+
+        @include mq (sp) {
+            position: static;
+        }
+    }
+}
+
+.news__table_date {
+    padding-left: 34px;
+    position: relative;
+
+    @include mq (sp) {
+        display: block;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 60px;
+        margin-top: 10px;
+        line-height: 26px;
+    }
+
+    &::before {
+        position: absolute;
+        bottom: -3px;
+        left: -7px;
+        width: 1px;
+        height: 55px;
+        content: '';
+        background: #e5e5e5;
+
+        @include mq (sp) {
+            position: static;
+        }
+    }
+}
+
+.news__table_date03 {
+
+    @include mq (tab) {
+        line-height: 26px;
+    }
+}
+
+.news__btn {
+    margin: 60px auto 0;
+
+    @include mq (sp) {
+        width: 152px;
+    }
+}
+
+
+.news__is_tab {
+
+
+    @include mq (pc) {
+        display: none;
+    }
+}
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// contact
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+.contact {
+    padding: 117px 20px 111px 20px;
+    background: $color-bg-yellow;
+
+    @include mq (sp) {
+        padding: 38px 20px 40px 20px;
+
+    }
+}
+
+
+.contact__inner {}
+
+.contact__title_jp {}
+
+.contact__title_en {
+
+    &::after {
+        bottom: -15px;
+    }
+}
+
+.contact__list {
+    margin-top: 60px;
+    width: 100%;
+    height: 195px;
+    display: grid;
+    grid-template-columns: repeat(3, 27.404%);
+    grid-template-rows: repeat(1, 195px);
+
+    align-items: start;
+    justify-items: center;
+
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+
+    @include mq (sp) {
+        grid-template-columns: repeat(1, 100%);
+        grid-template-rows: repeat(3, 105px);
+        /* 113 */
+        height: auto;
+        margin-top: 19px;
+        justify-items: start;
+        align-items: center;
+        justify-content: center;
+
+    }
+}
+
+.contact__item {
+    max-width: 285px;
+    min-width: 190px;
+    width: 100%;
+    position: relative;
+
+    @include mq (sp) {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        font-size: 14px;
+        justify-content: center;
+    }
+
+    &:nth-of-type(1) {
+        padding-left: 5px;
+
+        &::after {
+            position: absolute;
+            bottom: -32px;
+            left: -1px;
+            width: 1px;
+            height: 191px;
+            content: '';
+            background: #333;
+
+            @include mq (tab) {
+                bottom: -51px;
+
+            }
+
+            @include mq (sp) {
+                bottom: -13px;
+                left: 0px;
+                width: 100%;
+                height: 1px;
+            }
+        }
+
+        @include mq (sp) {
+            padding: 0;
+        }
+
+        .contact__icon {
+            width: 27px;
+            align-content: center;
+
+            @include mq (sp) {
+                margin: 0px 0 0 0px;
+                width: 50px;
+                padding: 10px 0px 0 0;
+
+                img {
+                    width: 27px;
+                }
+            }
+        }
+
+        .contact__text {
+            @include mq (sp) {
+                width: 109px;
+                padding: 16px 7px 0 0;
+                margin: 0;
+                font-size: 14px;
+            }
+        }
+
+    }
+
+    &:nth-of-type(2) {
+
+        // width: 32px;
+        &::after {
+            position: absolute;
+            bottom: -32px;
+            left: -1px;
+            width: 1px;
+            height: 191px;
+            content: '';
+            background: #333;
+
+
+            @include mq (tab) {
+                bottom: -47px;
+            }
+
+            @include mq (sp) {
+                bottom: -16px;
+                left: 0px;
+                width: 100%;
+                height: 1px;
+            }
+        }
+
+        @include mq (sp) {
+            margin: 23px auto 0;
+            padding-top: 13px;
+            height: 84px;
+            width: 100%;
+            margin: 0;
+            margin-left: -3px;
+            justify-content: center;
+        }
+
+        @include mq (tab) {
+            .contact__btn02 {
+                margin-top: 7px;
+            }
+        }
+    }
+
+    .contact__icon {
+        @include mq (sp) {
+            width: 50px;
+            margin: 0;
+            padding: 17px 0 0 0px;
+            margin-left: -11px;
+
+            img {
+                width: 32px;
+            }
+        }
+    }
+
+    .contact__text {
+        font-size: 20px;
+        font-size: clamp(16px, 2vw, 20px);
+        margin-top: 14px;
+
+        @include mq (tab) {
+            margin-top: 0px;
+        }
+
+        @include mq (sp) {
+            width: 112px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 5px 12px 0 0px;
+            margin-left: 3px;
+            font-size: 14px;
+        }
+    }
+
+
+    &:nth-of-type(3) {
+        padding-right: 5px;
+
+        @include mq (sp) {
+            padding: 20px 0 0 0;
+        }
+
+        &::after {
+            position: absolute;
+            bottom: -50px;
+            left: -1px;
+            width: 1px;
+            height: 191px;
+            content: '';
+            background: #333;
+
+            @include mq (tab) {
+                bottom: -39px;
+
+            }
+
+            @include mq (sp) {
+                display: none;
+            }
+        }
+        &::before {
+            position: absolute;
+            bottom: -50px;
+            right: 1px;
+            width: 1px;
+            height: 191px;
+            content: '';
+            background: #333;
+
+            @include mq (tab) {
+                bottom: -39px;
+
+            }
+
+            @include mq (sp) {
+                display: none;
+            }
+        }
+
+        @include mq (sp) {
+            justify-content: center;
+        }
+
+        .contact__icon {
+            width: 22px;
+
+            @include mq (sp) {
+                width: 50px;
+                height: 50px;
+                padding: 26px 0 0 24px;
+
+                img {
+                    width: 22px;
+                }
+            }
+        }
+
+
+        .contact__text {
+
+            padding-right: 2px;
+            margin-top: 0;
+
+            @include mq (sp) {
+                padding: 18px 0 0 7px;
+               font-size: 14px;
+            }
+
+            @include mq (xs) {
+                padding: 18px 0 0 0px;
+
+            }
+
+
+        }
+    }
+
+
+
+
+
+}
+
+.contact__icon {
+    width: 27px;
+    height: 32px;
+    margin: 20px auto 0;
+
+    @include mq (sp) {
+        width: 50px;
+
+    }
+
+}
+
+.contact__text {
+    font-size: 20px;
+    font-size: clamp(16px, 2.1vw, 20px);
+    margin-top: 16px;
+
+    @include mq (sp) {
+        width: 160px;
+        
+    }
+
+    &:nth-of-type(3) {
+        padding-right: 2px;
+        margin-top: 0;
+    }
+}
+
+.contact__tel_wrap {
+    @include mq (sp) {
+        margin-right: 3px;
+    }
+}
+
+.contact__number {
+    font-size: 24px;
+    font-size: clamp(20px, 2.1vw, 24px);
+    font-family: $fontEn;
+    margin-top: 23px;
+    color: $color-font-gleen;
+}
+
+.contact__btn01 {
+    margin: 22px auto 0;
+    background-color: $color-bg-yellow-hard;
+
+    @include mq (sp) {
+        margin: 0px 15px 18px 8px;
+
+    }
+}
+
+.contact__btn02 {
+    margin: 20px auto 0;
+
+    @include mq (sp) {
+        margin: 4px 0px 0;
+
+    }
+    @include mq (xs) {
+       margin-left: 7px;
+    }
+}
+
+.contact__btn03 {
+    @include mq (tab) {
+        display: none;
+    }
+
+    @include mq (sp) {
+        margin: 18px auto 0;
+    }
+
+    @include mq (xs) {
+        margin: 18px 0px 0 15px;
+    }
+}
+
+.contact__btn_link {
+    color: #fff;
+
+    @include mq (sp) {
+        font-size: 16px;
+        width: 150px;
+    }
+}
+
+.contact__time {
+    font-size: 12px;
+    margin-top: 7px;
+    color: $color-font-gleen;
+
+    @include mq (sp) {
+        letter-spacing: -0.03em;
+    }
+}
+
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+// footer
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+.footer {
+    background: $color-bg-green;
+    color: #fff;
+}
+
+.footer__inner {
+    text-align: center;
+    padding: 80px 0 120px 0;
+
+    @include mq (sp) {
+        padding: 40px 0 40px 0;
+
+    }
+}
+
+.footer__logo {
+    width: 80px;
+    height: 90px;
+    margin: auto;
+}
+
+.footer__name {
+    margin-top: 35px;
+
+}
+
+.footer__address {
+    margin-top: 30px;
+    letter-spacing: 1.1;
+    
+    line-height: 24px;
+
+    @include mq (sp) {
+    }
+
+}
+
+.footer__number {
+    margin-top: 30px;
+    font-family: $fontEn;
+    color: #fff;
+}
+
+.footer__mail {
+    margin-top: 30px;
+    font-family: $fontEn;
+}
+
+.footer__item_list01 {
+    margin-top: 58px;
+    display: flex;
+    justify-content: center;
+
+    @include mq (sp) {
+        justify-content: space-between;
+        padding:0 20px;
+        font-size: 14px;
+    }
+
+    @include mq (xs) {
+        flex-direction: column;
+        font-size: 16px;
+    }
+
+}
+
+.footer__item01 {
+    padding-left: 17px;
+    transition: .4s;
+
+    @include mq (sp) {
+        padding: 0;
+    }
+
+
+    @include mq (xs) {
+        margin-top: 10px;
+    }
+
+    &:hover {
+        opacity: .7;
+    }
+
+    // &:not(:first-child) {
+    //     padding-left: 65px;
+
+    //     @include mq (sp) {
+    //         padding: 48px 0 0 0;
+    //     }
+    // }
+}
+
+.footer__link01 {
+    color: #fff;
+    @include mq (xs) {
+        line-height: 30px;
+    }
+}
+
+.footer02 {
+    background-color: $color-bg-black;
+    height: 50px;
+    line-height: 50px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    padding: 0 20px;
+
+    @include mq (sp) {
+        height: 114px;
+    }
+
+
+}
+
+.footer__inner02 {
+    @include mq (sp) {}
+
+}
+
+.footer__item_list02 {
+    display: flex;
+    justify-content: space-between;
+
+    @include mq (sp) {
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+.footer__item_list02_left {
+    display: flex;
+
+    @include mq (sp) {
+        justify-content: center;
+    }
+}
+
+.footer__item02 {
+    @include mq (sp) {
+        max-width: 300px;
+    }
+
+
+
+    &:first-child {
+        padding-right: 67px;
+
+        @include mq (sp) {
+            padding-right: 20px;
+            padding-left: 50px;
+
+        }
+    }
+}
+
+.footer__link02 {
+    color: #fff;
+    font-size: 14px;
+
+    @include mq (xs) {
+        font-size: 12px;
+    }
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
+.footer__item_list02_right {
+    margin-top: -2px;
+
+    @include mq (sp) {
+        text-align: center;
+        padding-top: 3px;
+    }
+}
+
+.footer__copy_right {
+    font-size: 12px;
+    font-family: $fontEn;
+}
+
+
+
+.btn_link {
+    transition: .4s;
+
+    &:hover {
+        opacity: .4;
+    }
+}
+
+.works__item {
+    transition: .4s;
+
+    &:hover {
+        opacity: .7;
+        transform: scale(1.1);
+    }
+}
+
+.news__table_item {
+    transition: .4s;
+
+    &:hover {
+        opacity: .6;
+    }
+}
+
+@include mq (xs) {
+    .contact__btn01 {
+        margin-left: 0px;
+        margin-right: 0;
+    }
+
+}

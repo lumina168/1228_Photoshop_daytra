@@ -1,0 +1,6 @@
+[12/27/2021, 1:19:39 PM] layer "arrow-b-icon.svg": Duplicate path: arrow-b-icon.svg
+[12/27/2021, 1:19:39 PM] layer "arrow-b-icon.svg": Duplicate path: arrow-b-icon.svg
+[12/27/2021, 1:19:39 PM] layer "arrow-b-icon.svg": Duplicate path: arrow-b-icon.svg
+[12/27/2021, 1:19:39 PM] layer "arrow-b-icon.svg": Duplicate path: arrow-b-icon.svg
+[12/27/2021, 1:19:39 PM] layer "arrow-b-icon.svg": Duplicate path: arrow-b-icon.svg
+[12/27/2021, 1:19:39 PM] layer "info@example.com": Unsupported extension: com
